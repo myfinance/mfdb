@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.mfbackend.db_name }} 
+  name: {{ .Values.mfdb.db_name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Values.mfbackend.db_name }}  
+      app: {{ .Values.mfdb.db_name }}
   template:
     metadata:
       labels:
-        app: {{ .Values.mfbackend.db_name }}
+        app: {{ .Values.mfdb.db_name }}
     spec:
       containers:
-        - name: {{ .Values.mfbackend.db_name }}
+        - name: {{ .Values.mfdb.db_name }}
           image: "{{ .Values.image.repository }}mfpostgres:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}   
           volumeMounts:
@@ -21,7 +21,7 @@ spec:
              mountPath: /var/lib/postgresql/data
           env:
           - name: POSTGRES_PASSWORD
-            value: {{ .Values.mfbackend.db_pw }}   
+            value: {{ .Values.mfdb.db_pw }}
       volumes:
         - name: myfinancedata
           persistentVolumeClaim:
@@ -45,39 +45,11 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}                     
         env:
         - name: DB_PW
-          value: "{{ .Values.mfbackend.db_pw }}"   
+          value: "{{ .Values.mfdb.db_pw }}"
         - name: DB_IMAGE
-          value: {{ .Values.mfbackend.db_name }}  
+          value: {{ .Values.mfdb.db_name }}
         - name: DB_USER
           value: postgres  
       restartPolicy: OnFailure     
   backoffLimit: 4 
 
----
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: myfinance
-spec:
-  replicas: {{ .Values.replicaCount }}
-  selector:
-    matchLabels:
-      app: {{ .Values.mfbackend.mf_name }}    
-  template:
-    metadata:
-      labels:
-        app: {{ .Values.mfbackend.mf_name }}    
-    spec:
-      containers:
-        - name: {{ .Values.mfbackend.mf_name }}      
-          image: "{{ .Values.image.repository }}mfbackend:{{ .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}      
-          tty: true     
-          volumeMounts:
-           - name: myfinanceconfig
-             mountPath: /MyFinance/envconfig           
-      volumes:
-        - name: myfinanceconfig
-          persistentVolumeClaim:
-              claimName: {{ .Values.pv.configpvc }}                                            

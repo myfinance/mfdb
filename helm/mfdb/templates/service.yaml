@@ -1,32 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
- name: {{ .Values.mfbackend.db_name }}
+ name: {{ .Values.mfdb.db_name }}
 spec:
  #this defines which pod is going to be presented by this service
  selector:
-  app: {{ .Values.mfbackend.db_name }}
+  app: {{ .Values.mfdb.db_name }}
  ports:
-  - name: {{ .Values.mfbackend.db_name }}
-    port: 5432
- type: ClusterIP  
- 
- 
----
-
-apiVersion: v1
-kind: Service
-metadata:
- name: {{ .Values.mfbackend.mf_name }}    
-spec:
- #this defines which pod is going to be presented by this service
- selector:
-  app: {{ .Values.mfbackend.mf_name }}    
- ports:
-  - name: http
-    port: {{ .Values.mfbackend.mf_http_port }}
-    nodePort: {{ .Values.mfbackend.mf_http_port_ext }}
-  - name: https
-    port: {{ .Values.mfbackend.mf_https_port }}
-    nodePort: {{ .Values.mfbackend.mf_https_port_ext }}                   
- type: NodePort 
+  - name: {{ .Values.mfdb.db_name }}
+    port: { { .Values.mfdb.db_port } }
+    nodePort: { { .Values.mfdb.db_port_ext } }
+ type: NodePort

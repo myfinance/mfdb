@@ -75,4 +75,5 @@ pipeline {
        sh 'curl ${TARGET_HELM_REPO} --upload-file helmcharts/mfdb-${VERSION}.tgz -v'
      }
    }
+   }
 }
