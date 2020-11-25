@@ -31,7 +31,7 @@ pipeline {
     }      
      steps {
        cleanWs()
-       git credentialsId: 'github', url: "https://github.com/myfinance/${SERVICE_NAME}.git"
+       git credentialsId: 'github', url: "https://github.com/myfinance/mfdb.git"
 
      }
    }
