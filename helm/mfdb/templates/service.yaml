@@ -9,5 +9,5 @@ spec:
  ports:
   - name: {{ .Values.mfdb.db_name }}
     port: 5432
-    nodePort: { { .Values.mfdb.db_port_ext } }
+    nodePort: 30023
  type: NodePort
