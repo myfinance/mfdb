@@ -18,7 +18,8 @@ pipeline {
    MVN_REPO = "http://${NEXUS_URL}/repository/maven-releases/"
    DOCKER_REPO = "${K8N_IP}:31003/repository/mydockerrepo/"
    TARGET_HELM_REPO = "http://${NEXUS_URL}/repository/myhelmrepo/"
-   SONAR = "https://sonarcloud.io"
+   DEV_NAMESPACE = "mfdev"
+   TEST_NAMESPACE = "mftest"
  }
  
  stages{
@@ -69,7 +70,7 @@ pipeline {
        //sh 'kubectl delete job.batch/mfupgrade'
        //sh 'envsubst < deploy.yaml | kubectl apply -f -'
        sh 'envsubst < ./helm/mfdb/Chart_template.yaml > ./helm/mfdb/Chart.yaml'
-       sh 'helm upgrade -i --cleanup-on-fail mfdb ./helm/mfdb/ --set repository=${DOCKER_REPO}${DOCKERHUB_USER}/${ORGANIZATION_NAME}-'
+       sh 'helm upgrade -i --cleanup-on-fail mfdb ./helm/mfdb/ -n ${DEV_NAMESPACE} --set repository=${DOCKER_REPO}${DOCKERHUB_USER}/${ORGANIZATION_NAME}-'
        sh 'helm package helm/mfdb -u -d helmcharts/'
        sh 'curl ${TARGET_HELM_REPO} --upload-file helmcharts/mfdb-${VERSION}.tgz -v'
      }
