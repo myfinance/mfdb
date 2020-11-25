@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.hf.dac</groupId>
+    <artifactId>mf-docker-images</artifactId>
+    <parent>
+        <artifactId>dbroot</artifactId>
+        <groupId>de.hf.dac</groupId>
+        <version>0.0.0-0-SNAPSHOT</version>
+    </parent>
+    <packaging>pom</packaging>
+
+
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <activation>
+                <os>
+                    <name>linux</name>
+                </os>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <version>${dependency-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>copy</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.liquibase</groupId>
+                                            <artifactId>liquibase-core</artifactId>
+                                            <version>${liquibase.version}</version>
+                                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>org.postgresql</groupId>
+                                            <artifactId>postgresql</artifactId>
+                                            <version>${postgresql.version}</version>
+                                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                    <!-- other configurations here -->
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <version>${assembly-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>docker-assembly</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                                <configuration>
+                                    <finalName>docker</finalName>
+                                    <descriptors>
+                                        <descriptor>src/main/assembly/docker-prep-assembly.xml</descriptor>
+                                    </descriptors>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
+
+</project>
