@@ -12,7 +12,7 @@ spec:
         paths:
         - path: /
           backend:
-            serviceName: {{ .Values.mfdb.mf_name }}
+            serviceName: {{ .Values.mfdb.db_name }}
             servicePort: {{ .Values.mfdb.db_port }}
 {{- end }}
 

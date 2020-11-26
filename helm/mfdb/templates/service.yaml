@@ -8,6 +8,6 @@ spec:
   app: {{ .Values.mfdb.db_name }}
  ports:
   - name: {{ .Values.mfdb.db_name }}
-    port: 5432
-    nodePort: 30023
+    port: {{ .Values.mfdb.db_port_ext }}
+    nodePort: {{ .Values.mfdb.db_port_ext }}
  type: NodePort
