@@ -25,7 +25,7 @@ spec:
       volumes:
         - name: myfinancedata
           persistentVolumeClaim:
-              claimName: {{ .Values.stage }}_{{ .Values.pv.mfdbpvc }}
+              claimName: {{ .Values.stage }}-{{ .Values.pv.mfdbpvc }}
 
 ---
 
