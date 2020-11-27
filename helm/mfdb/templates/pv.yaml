@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Values.pv.mfdbpvc }}
+  name: {{ .Values.stage }}_{{ .Values.pv.mfdbpvc }}
 spec:
-  storageClassName: mfdbstorage
+  storageClassName: {{ .Values.stage }}_mfdbstorage
   accessModes:
     - ReadWriteOnce
   resources:
@@ -15,9 +15,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: localstorage
+  name: {{ .Values.stage }}_localstorage
 spec:
-  storageClassName: mfdbstorage
+  storageClassName: {{ .Values.stage }}_mfdbstorage
   accessModes:
     - ReadWriteOnce
   capacity:
