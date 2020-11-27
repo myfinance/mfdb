@@ -71,7 +71,7 @@ pipeline {
        sh 'kubectl apply -f ./namespace.yaml'
        //sh 'envsubst < deploy.yaml | kubectl apply -f -'
        sh 'envsubst < ./helm/mfdb/Chart_template.yaml > ./helm/mfdb/Chart.yaml'
-       sh 'helm install mfdb ./helm/mfdb/ -n ${DEV_NAMESPACE} --set repository=${DOCKER_REPO}${DOCKERHUB_USER}/${ORGANIZATION_NAME}- --set stage=dev'
+       sh 'helm upgrade -i --cleanup-on-fail mfdb ./helm/mfdb/ -n ${DEV_NAMESPACE} --set repository=${DOCKER_REPO}${DOCKERHUB_USER}/${ORGANIZATION_NAME}- --set stage=dev'
        sh 'helm package helm/mfdb -u -d helmcharts/'
        sh 'curl ${TARGET_HELM_REPO} --upload-file helmcharts/mfdb-${VERSION}.tgz -v'
      }
