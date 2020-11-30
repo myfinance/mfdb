@@ -9,6 +9,5 @@ spec:
  ports:
   - name: {{ .Values.mfdb.db_name }}
     port: {{ .Values.mfdb.db_port }}
-    #nodePort: {{ .Values.mfdb.db_port_ext }}
- #type: NodePort
- type: ClusterIP
+    nodePort: {{ .Values.mfdb.db_port_ext }}
+ type: NodePort

@@ -47,7 +47,7 @@ spec:
         - name: DB_PW
           value: "{{ .Values.mfdb.db_pw }}"
         - name: DB_URL
-          value: {{ .Values.stage }}{{ .Values.ingress.prefix }}{{ .Values.ingress.myfinance_host }}{{ .Values.ingress.postfix }}
+          value: "{{ .Values.mfdb.db_url }}:{{ .Values.mfdb.db_port_ext }}/marketdata"
         - name: DB_USER
           value: postgres  
       restartPolicy: OnFailure     
