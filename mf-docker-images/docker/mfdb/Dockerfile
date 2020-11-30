@@ -8,4 +8,4 @@ RUN mkdir logs
 
 RUN apk --update add postgresql-client && rm -rf /var/cache/apk/*
 
-ENTRYPOINT ./wrapliquibase "$DB_URL:5432/marketdata" "$DB_USER" "$DB_PW"
+ENTRYPOINT ./wrapliquibase "$DB_URL" "$DB_USER" "$DB_PW"
