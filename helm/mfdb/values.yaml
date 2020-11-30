@@ -21,6 +21,7 @@ mfdb:
   db_name: mfdb
   db_port: 5432
   db_port_ext: 30023
+  db_url: mfdb:5432/marketdata
 
 ingress:
   enabled: true
