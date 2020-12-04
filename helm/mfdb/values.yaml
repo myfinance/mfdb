@@ -20,5 +20,5 @@ mfdb:
   db_pw: vulkan
   db_name: mfdb
   db_port: 5432
-  db_port_ext: 30023
+  db_port_ext: 30020
   db_url: mfdb
