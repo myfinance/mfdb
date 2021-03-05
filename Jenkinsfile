@@ -7,9 +7,9 @@ pipeline {
    DOCKERHUB_USER = "holgerfischer"
 
    //Snapshot Version
-   VERSION = "0.16.0-alpha.${BUILD_ID}"
+   //VERSION = "0.16.0-alpha.${BUILD_ID}"
    //Release Version
-   //VERSION = "0.15.0"
+   VERSION = "0.16.0"
 
    K8N_IP = "192.168.100.73"
    DB_REPOSITORY_TAG = "${DOCKERHUB_USER}/${ORGANIZATION_NAME}-mfpostgres:${VERSION}"
